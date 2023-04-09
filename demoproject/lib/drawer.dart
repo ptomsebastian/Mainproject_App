@@ -2,6 +2,7 @@ import 'package:demoproject/accountlink.dart';
 import 'package:demoproject/getnews.dart';
 import 'package:demoproject/sendquery.dart';
 import 'package:demoproject/updateprofile.dart';
+import 'package:demoproject/viewbookingsapp.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -65,8 +66,11 @@ Widget build(BuildContext context) {
         
         ListTile(
           leading: Icon(Icons.history_edu, color: Colors.green),
-          title: Text("View bookings",style: TextStyle(fontStyle: FontStyle.italic)),
-          onTap: () {},
+          title: Text("View Bookings",style: TextStyle(fontStyle: FontStyle.italic)),
+          onTap: () {
+             Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ViewBookingsApp()));
+          },
         ),
         ListTile(
           leading: Icon(Icons.newspaper, color: Colors.red),

@@ -2,6 +2,7 @@ import 'package:demoproject/homepage.dart';
 import 'package:demoproject/Login_Screen.dart';
 import 'package:demoproject/home.dart';
 import 'package:demoproject/homepage.dart';
+import 'package:demoproject/ip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -27,8 +28,9 @@ class _HomeelementsState extends State<Homeelements> {
   // print(token);
   print('logot clicked');
   var response = await http.post(
+    Uri.parse(ip+'/api/userlogout/'),
     // Uri.parse('http://192.168.43.34:8000/api/userlogout/'),
-    Uri.parse('http://10.0.2.2:8000/api/userlogout/'),
+    // Uri.parse('http://10.0.2.2:8000/api/userlogout/'),
     headers: {
       'Authorization': '$token',
     },

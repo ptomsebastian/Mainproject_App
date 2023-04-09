@@ -3,6 +3,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:demoproject/Login_Screen.dart';
 import 'package:demoproject/home.dart';
 import 'package:demoproject/homepage.dart';
+import 'package:demoproject/ip.dart';
 import 'package:demoproject/signin.dart';
 
 import 'package:email_validator/email_validator.dart';
@@ -50,8 +51,9 @@ class _LoginState extends State<Login> {
 void _submitForm() async {
   print(_emailController.text.toString());
   print('entered submit form');
+    final url = Uri.parse(ip+'/api/Customerregister/');
     // final url = Uri.parse('http://192.168.177.227:8000/api/Customerregister/');
-    final url = Uri.parse('http://10.0.2.2:8000/api/Customerregister/'); // replace with your own API endpoint
+    // final url = Uri.parse('http://10.0.2.2:8000/api/Customerregister/'); // replace with your own API endpoint
     final body = jsonEncode({
       'email': _emailController.text.toString(),
       'phone':_phoneController.text.toString(),

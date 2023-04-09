@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:demoproject/home.dart';
+import 'package:demoproject/ip.dart';
 import 'package:flutter/material.dart';
 import 'Fade_Animation.dart';
 import 'Hex_Color.dart';
@@ -38,8 +39,9 @@ final _formKey = GlobalKey<FormState>();
   void _submitForm() async {
   print(emailController.text.toString());
   print('entered submit form');
+    final url = Uri.parse(ip+'/api/Customerregister/');
     // final url = Uri.parse('http://192.168.43.34:8000/api/Customerregister/');
-    final url = Uri.parse('http://10.0.2.2:8000/api/Customerregister/');  // replace with your own API endpoint
+    // final url = Uri.parse('http://10.0.2.2:8000/api/Customerregister/');  // replace with your own API endpoint
     final body = jsonEncode({
       'name': nameController.text.toString(),
       'address': addressController.text.toString(),

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:demoproject/home.dart';
 import 'package:demoproject/userdash.dart';
 import 'package:http/http.dart' as http;
+import 'package:demoproject/ip.dart';
+
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -36,10 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
  Future<void> _login() async {
+  print(ip);
   print('sigin clicked');
   final response = await http.post(
+    Uri.parse(ip+'/api/userlogin/'),
     // Uri.parse('http://192.168.43.34:8000/api/userlogin/'),
-    Uri.parse('http://10.0.2.2:8000/api/userlogin/'),
+    // Uri.parse('http://10.0.2.2:8000/api/userlogin/'),
     headers: {'Content-Type': 'application/json'},
     body: json.encode({
       'email': emailController.text,
@@ -55,6 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
     // final token = json.decode(response.body)['token'];
     await storage.write(key: 'token', value: token);
     await storage.write(key: 'usermail', value: mailfromdjango);
+     await storage.write(key: 'name', value: data['name']);
+      await storage.write(key: 'phone', value: data['phone'].toString());
+
+    print("&&&&&&&&&");
+      print(data);
     // final prefs = await SharedPreferences.getInstance();
     // await prefs.setString('usermail', mailfromdjango);
     print(token);

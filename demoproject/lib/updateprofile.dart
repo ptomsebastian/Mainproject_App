@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:demoproject/bottom.dart';
 import 'package:demoproject/drawer.dart';
 import 'package:demoproject/getnews.dart';
 import 'package:demoproject/homeelements.dart';
+import 'package:demoproject/ip.dart';
 import 'package:demoproject/userdash.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +44,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   void _getProfile() async {
     final token = await storage.read(key: 'token');
-    var request =
-        http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8000/api/updateprofile/'));
+  var request =
+        http.MultipartRequest('POST', Uri.parse(ip+'/api/updateprofile/'));
+        // http.MultipartRequest('POST', Uri.parse('http://192.168.43.34:8000/api/updateprofile/'));
+    // var request =
+    //     http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8000/api/updateprofile/'));
     final Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
       'Authorization': '$token',
@@ -124,7 +129,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
      }
      else{
     final token = await storage.read(key: 'token');
-    var request = http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8000/api/editprofile/'));
+    var request = http.MultipartRequest('POST', Uri.parse(ip+'/api/editprofile/'));
+    // var request = http.MultipartRequest('POST', Uri.parse('http://192.168.43.34:8000/api/editprofile/'));
+    // var request = http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8000/api/editprofile/'));
     final Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
       'Authorization': '$token',
@@ -138,14 +145,74 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
     var response = await request.send();
 
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profile updated successfully')),
+    // if (response.statusCode == 200) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Profile updated successfully')),
+    //   );
+    //   Navigator.of(context).pushAndRemoveUntil(
+    //       MaterialPageRoute(builder: (ctx) => UserHome()),
+    //       (Route<dynamic> route) => false);
+    // } 
+
+ if (response.statusCode == 200) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Prevent user from dismissing the dialog
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+               SizedBox(height: 12),
+              // Add a spinning animation with a checkmark icon using the flutter_spinkit package
+              SpinKitDualRing(
+                color: Colors.green, // Set the spinner color
+                lineWidth: 5, // Set the spinner line width
+                size: 82.0, // Set the spinner size
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Profile updated',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+              SizedBox(height: 12),
+              Text(
+                'Your profile has been updated successfully!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ],
+          ),
+        ),
       );
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (ctx) => UserHome()),
-          (Route<dynamic> route) => false);
-    } else if (response.statusCode == 400) {
+    },
+  );
+
+  await Future.delayed(Duration(seconds: 1)); // Wait for 2 seconds
+
+  Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(builder: (ctx) => UserHome()),
+    (Route<dynamic> route) => false,
+  );
+}
+
+
+    
+    else if (response.statusCode == 400) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Invalid....')),
       );

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:demoproject/bottom.dart';
 import 'package:demoproject/drawer.dart';
 import 'package:demoproject/homeelements.dart';
+import 'package:demoproject/ip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -37,7 +38,9 @@ class _GetNewsState extends State<GetNews> {
   }
 
   void _getNews() async {
-    var request = http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8000/api/getnews/'));
+    var request = http.MultipartRequest('POST', Uri.parse(ip+'/api/getnews/'));
+    // var request = http.MultipartRequest('POST', Uri.parse('http://192.168.43.34:8000/api/getnews/'));
+    // var request = http.MultipartRequest('POST', Uri.parse('http://10.0.2.2:8000/api/getnews/'));
    final Map<String, String> headers = {
     'Content-Type': 'multipart/form-data',
     
@@ -126,7 +129,9 @@ Widget build(BuildContext context) {
                           topRight: Radius.circular(10),
                         ),
                         child: Image.network(
-                          'http://10.0.2.2:8000/media/${item['image']}',
+                          ip+'/media/${item['image']}',
+                          // 'http://192.168.43.34:8000/media/${item['image']}',
+                          // 'http://10.0.2.2:8000/media/${item['image']}',
                           width: double.infinity,
                           // height: 200,
                           fit: BoxFit.cover,
